@@ -1,0 +1,2 @@
+# Remote Time Track
+RTT is a site designed to reduce the time sink and frustration of calculating actual work time for remote workers. This is accomplished using a static webpage and allows the user to download and log their working hours for the benefit of their employer.
