@@ -1,9 +1,10 @@
 window.addEventListener('load', start);
 
+let DateTime = luxon.DateTime;
+
 function start () {
   setInterval((() => {
     let timer = document.querySelector("#currentTimeString");
-    let currentTime = new Date();
-    timer.textContent = `Current Time is: ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`
+    timer.textContent = `Current Time: ${DateTime.local().toFormat("HH:mm:ss")}`;
   }), 1000);
 }

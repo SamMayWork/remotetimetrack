@@ -13,8 +13,10 @@ let taskPresets = [
 
 let oldSelected;
 
+let DateTime = luxon.DateTime;
+
 window.addEventListener('load', () => {
-  timeStats.startTime = new Date();
+  timeStats.startTime = DateTime.local();
   pushNewMarker("Started Work!");
   updateScreen();
   setInterval(updateScreen, 1000);
@@ -23,7 +25,7 @@ window.addEventListener('load', () => {
 
 function updateScreen () {
   title = document.querySelector('#timeStatistics');
-  title.textContent = `You clocked in at ${getTimeString(timeStats.startTime)} and have been working for ${getTimeString(new Date(new Date() - timeStats.startTime))}`;
+  title.textContent = `You clocked in at ${timeStats.startTime.toFormat("HH:mm:ss")}`;
 
   let actionlog = document.querySelector("#actionlog");
   let timelog = document.querySelector("#timelog");
@@ -35,7 +37,7 @@ function updateScreen () {
     let newTime = document.createElement("li");
 
     newAction.textContent = timeStats.markers[i].message;
-    newTime.textContent = getTimeString(timeStats.markers[i].time);
+    newTime.textContent = timeStats.markers[i].time.toFormat("HH:mm:ss");
 
     actionlog.appendChild(newAction);
     timelog.appendChild(newTime);
@@ -78,15 +80,6 @@ function itemClicked (e) {
   oldSelected = e;
 }
 
-function getTimeString (date=new Date()) {
-  return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-}
-
-function subtractTimes (time1, time2) {
-  time1.setDate(time1.getDate() - time2);
-  return time1;
-}
-
 function updateLog () {
   for (let value of timeStats.markers) {
     console.log(`${value.message} @ ${value.time}`);
@@ -95,7 +88,7 @@ function updateLog () {
 
 function pushNewMarker (description) {
   timeStats.markers.push({
-    time : new Date(),
+    time : DateTime.local(),
     message : description
   });
 }
