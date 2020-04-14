@@ -8,7 +8,10 @@ let taskPresets = [
   "Summarising",
   "Calling",
   "Organsing",
-  "Emailing"  
+  "Emailing",
+  "Read Coding",  
+  "Break",
+  "Walking"
 ]
 
 let oldSelected;
@@ -22,6 +25,10 @@ window.addEventListener('load', () => {
   setInterval(updateScreen, 1000);
   regenerateTasks();
 });
+
+window.onbeforeunload = function () {
+  return "";
+}
 
 function updateScreen () {
   title = document.querySelector('#timeStatistics');
@@ -73,17 +80,10 @@ function itemClicked (e) {
   }
   
   pushNewMarker(e.target.textContent);
-  updateLog();
   e.target.classList = [];
   e.target.classList.add('btn');
   e.target.classList.add('btn-success');
   oldSelected = e;
-}
-
-function updateLog () {
-  for (let value of timeStats.markers) {
-    console.log(`${value.message} @ ${value.time}`);
-  }
 }
 
 function pushNewMarker (description) {
@@ -91,4 +91,8 @@ function pushNewMarker (description) {
     time : DateTime.local(),
     message : description
   });
+}
+
+function clockOut() {
+  pushNewMarker("Clocked out...");
 }
