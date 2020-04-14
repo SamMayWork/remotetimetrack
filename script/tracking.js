@@ -11,6 +11,8 @@ let taskPresets = [
   "Emailing"  
 ]
 
+let oldSelected;
+
 window.addEventListener('load', () => {
   timeStats.startTime = new Date();
   pushNewMarker("Started Work!");
@@ -33,7 +35,7 @@ function updateScreen () {
     let newTime = document.createElement("li");
 
     newAction.textContent = timeStats.markers[i].message;
-    newTime.textContent = timeStats.markers[i].time;
+    newTime.textContent = getTimeString(timeStats.markers[i].time);
 
     actionlog.appendChild(newAction);
     timelog.appendChild(newTime);
@@ -50,6 +52,8 @@ function regenerateTasks () {
   for (let preset of taskPresets) {
     let newElement = document.createElement("li");
     newElement.textContent = preset;
+    newElement.classList.add("btn");
+    newElement.classList.add("btn-primary");
     newElement.addEventListener("click", itemClicked)
     parent.appendChild(newElement);
   }
@@ -60,12 +64,22 @@ function regenerateTasks () {
  * @param {*} e 
  */
 function itemClicked (e) {
+  if (oldSelected !== undefined) {
+    oldSelected.target.classList = [];
+    oldSelected.target.classList.add('btn');
+    oldSelected.target.classList.add('btn-primary');
+  }
+  
   pushNewMarker(e.target.textContent);
   updateLog();
+  e.target.classList = [];
+  e.target.classList.add('btn');
+  e.target.classList.add('btn-success');
+  oldSelected = e;
 }
 
 function getTimeString (date=new Date()) {
-  return `${0}:${date.getMinutes()}:${date.getSeconds()}`;
+  return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 }
 
 function subtractTimes (time1, time2) {
