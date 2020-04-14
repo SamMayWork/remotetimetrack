@@ -1,0 +1,29 @@
+.pagewide {
+  margin-top : 6em;
+
+  p {
+    margin-top : 1em;
+  }
+
+  * {
+    text-align : center;
+    font-family : "Open Sans"
+  }
+
+  .clockin {
+
+    display : block;
+
+    margin-top : 2em;
+    width : 100%;
+
+    font-size : 2em;
+    padding : 1em;
+    border-radius : 5px;
+    border : 1px solid #090031;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
