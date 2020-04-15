@@ -109,7 +109,12 @@ function clockOut() {
   pushNewMarker("Clocked out...");
   writeLocalWorkToStorage();
 
+  window.removeEventListener('onbeforeunload', (function () {
+    return "";
+  }));
+
   // Navigate to the overview screen
+  window.location.replace("overview.html");
 }
  
 /**
@@ -131,5 +136,5 @@ function writeTasksToLocalStorage (tasks) {
  * Loads all of the tasks stored in local storage
  */
 function loadTasksFromLocalStorage () {
-  return localStorage.getItem('tasks') === undefined ? undefined : JSON.parse(localStorage.getItem('tasks'));
+  return localStorage.getItem('tasks') === null ? undefined : JSON.parse(localStorage.getItem('tasks'));
 }
