@@ -26,14 +26,23 @@ let oldSelected;
 
 let DateTime = luxon.DateTime;
 
+// Handle for the page being loaded
 window.addEventListener('load', () => {
+
+  const tasks = loadTasksFromLocalStorage();
+  if (tasks !== undefined) { taskPresets = tasks; }
+
   timeStats.startTime = DateTime.local();
+
+
   pushNewMarker("Started Work!");
   updateScreen();
   setInterval(updateScreen, 1000);
+
   regenerateTasks();
 });
 
+// Stop the user accidentally navigating away from the site
 window.onbeforeunload = function () {
   return "";
 }
@@ -98,4 +107,29 @@ function pushNewMarker (description) {
 
 function clockOut() {
   pushNewMarker("Clocked out...");
+  writeLocalWorkToStorage();
+
+  // Navigate to the overview screen
+}
+ 
+/**
+ * Writes the timeStats object to localStorage
+ */
+function writeLocalWorkToStorage () {
+  localStorage.setItem('day', JSON.stringify(timeStats));
+}
+
+/**
+ * Writes an array of tasks to Local Storage
+ * @param {Array} tasks 
+ */
+function writeTasksToLocalStorage (tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+/**
+ * Loads all of the tasks stored in local storage
+ */
+function loadTasksFromLocalStorage () {
+  return localStorage.getItem('tasks') === undefined ? undefined : JSON.parse(localStorage.getItem('tasks'));
 }
