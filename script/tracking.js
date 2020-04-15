@@ -40,22 +40,17 @@ window.onbeforeunload = function () {
 
 function updateScreen () {
   title = document.querySelector('#timeStatistics');
-  title.textContent = `You clocked in at ${timeStats.startTime.toFormat("HH:mm:ss")}`;
+  title.textContent = `You clocked in at ${timeStats.startTime.toFormat("HH:mm")}`;
 
   let actionlog = document.querySelector("#actionlog");
-  let timelog = document.querySelector("#timelog");
   actionlog.innerHTML = "";
-  timelog.innerHTML = "";
 
   for (let i = 0; i < timeStats.markers.length; i++) {
     let newAction = document.createElement("li");
-    let newTime = document.createElement("li");
 
-    newAction.textContent = timeStats.markers[i].message;
-    newTime.textContent = timeStats.markers[i].time.toFormat("HH:mm:ss");
+    newAction.textContent = `${timeStats.markers[i].message} @ ${timeStats.markers[i].time.toFormat("HH:mm")}`;
 
     actionlog.appendChild(newAction);
-    timelog.appendChild(newTime);
   }
 }
 
