@@ -2,4 +2,12 @@ body {
   margin-top: 2em;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  margin-top: 1em;
+}
+
 /*# sourceMappingURL=overview.css.map */
