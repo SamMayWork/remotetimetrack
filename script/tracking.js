@@ -5,21 +5,21 @@ let timeStats = {
 }
 
 let taskPresets = [
-  "Summarising",
-  "Smears",
-  "Materinity Referals",
-  "NASO Reports",
-  "GMS3's",
-  "Diabetic Eyes",
   "Accepting Notes",
-  "GP-GP Transfers",
-  "Milk",
-  "Franking",
-  "Gynae Encoding",
-  "Meeting",
-  "Lunch",
   "Chase Medical Records",
-  "Military Spreadsheet"
+  "Diabetic Eyes",
+  "Franking",
+  "GMS3's",
+  "GP-GP Transfers",
+  "Gynae Encoding",
+  "Lunch",
+  "Materinity Referals",
+  "Meeting",
+  "Milk",
+  "Military Spreadsheet",
+  "NASO Reports",
+  "Smears",
+  "Summarising"
 ]
 
 let oldSelected;
