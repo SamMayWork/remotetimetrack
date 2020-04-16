@@ -14,6 +14,17 @@
   <title>RTT Tracking</title>
 </head>
 <body>
+  <div id="hiddenadd">
+    <div class="modal-container">
+      <p>Enter the name of the new task:</p>
+      <div class="controls-container">
+        <input type="text" id=newtask>
+        <button class="btn btn-danger" onclick="closeModal();">Cancel</button>
+        <button class="btn btn-primary" onclick="submitTaskModal();">Submit</button>  
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <h1 class="display-4" id=timeStatistics></h1>
     <p id=currentWorkItem></p>

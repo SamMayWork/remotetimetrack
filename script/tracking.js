@@ -134,13 +134,32 @@ function regenerateTasks () {
 
   let newTask = document.createElement('button');
   newTask.textContent = 'New Element ➕';
+  newTask.onclick = createElement;
   newTask.classList.add('btn', 'btn-info', 'fillx');
   parent.appendChild(newTask);
+}
+
+function createElement () {
+  let modal = document.querySelector("#hiddenadd");
+  modal.style.display = "block";
+}
+
+function closeModal () {
+  let modal = document.querySelector("#hiddenadd");
+  modal.style.display = "none";
 }
 
 function deleteElement (e) {
   currentTasks.removeTask(e.target.dataset.messageContent);
   regenerateTasks();
+}
+
+function submitTaskModal (e) {
+  let inputTask = document.querySelector("#newtask");
+  currentTasks.addTask(inputTask.value);
+  closeModal();
+  regenerateTasks();  
+  Tasks.saveToLocalStorage(currentTasks);
 }
 
 /**
