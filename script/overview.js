@@ -14,6 +14,9 @@ window.addEventListener('load', () => {
 
     container.appendChild(newL);
   }
+
+  let time = document.querySelector('#timeOverview');
+  time.textContent = `Overall, today you worked for ${(subtractTimes(new DateTime.local(), new DateTime.fromISO(stats.startTime))).toFormat("HH 'hours and' mm 'minutes'")}`;
 });
 
 function subtractTimes (time1, time2) {

@@ -49,7 +49,7 @@ window.onbeforeunload = function () {
 
 function updateScreen () {
   title = document.querySelector('#timeStatistics');
-  title.textContent = `You clocked in at ${timeStats.startTime.toFormat("HH:mm")}`;
+  title.textContent = `You clocked in at ${timeStats.startTime.toFormat("HH:mm")} on ${timeStats.startTime.weekdayLong}`;
 
   let actionlog = document.querySelector("#actionlog");
   actionlog.innerHTML = "";
