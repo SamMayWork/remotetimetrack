@@ -4,36 +4,70 @@ let timeStats = {
   endTime : ""
 }
 
-let taskPresets = [
-  "Accepting Notes",
-  "Chase Medical Records",
-  "Diabetic Eyes",
-  "Franking",
-  "GMS3's",
-  "GP-GP Transfers",
-  "Gynae Encoding",
-  "Lunch",
-  "Materinity Referals",
-  "Meeting",
-  "Milk",
-  "Military Spreadsheet",
-  "NASO Reports",
-  "Smears",
-  "Summarising"
-]
-
 let oldSelected;
 
 let DateTime = luxon.DateTime;
 
+class Tasks {
+  constructor(tasks) {
+    this.tasks = tasks;
+  }
+
+  getTaskList () {
+    return this.tasks.sort();
+  }
+
+  addTask (taskString) {
+    this.tasks.push(taskString);
+  }
+
+  addTasks (taskStrings) {
+    for (let value of taskStrings) {
+      this.tasks.push(value);
+    }
+  }
+
+  removeTask (taskString) {
+    this.tasks.splice(this.tasks.indexOf(taskString), 1);
+  }
+
+  clearTasks () {
+    this.tasks = [];
+  }
+
+  static saveToLocalStorage (tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks.getTaskList()));
+  }
+
+  static loadFromLocalStorage () {
+    return JSON.parse(localStorage.getItem('tasks'));
+  }
+}
+
+let currentTasks;
+
 // Handle for the page being loaded
 window.addEventListener('load', () => {
 
-  const tasks = loadTasksFromLocalStorage();
-  if (tasks !== undefined) { taskPresets = tasks; }
+  currentTasks = new Tasks([
+    "Accepting Notes",
+    "Chase Medical Records",
+    "Diabetic Eyes",
+    "Franking",
+    "GMS3's",
+    "GP-GP Transfers",
+    "Gynae Coding",
+    "Lunch",
+    "Materinity Referrals",
+    "Meeting",
+    "Milk",
+    "Military Spreadsheet",
+    "NASO Reports",
+    "Smears",
+    "Summarising"
+  ]);
 
   timeStats.startTime = DateTime.local();
-
 
   pushNewMarker("Started Work!");
   updateScreen();
@@ -70,14 +104,43 @@ function regenerateTasks () {
   let parent = document.querySelector("#items");
   parent.innerHTML = "";
 
-  for (let preset of taskPresets) {
-    let newElement = document.createElement("li");
-    newElement.textContent = preset;
-    newElement.classList.add("btn");
-    newElement.classList.add("btn-primary");
-    newElement.addEventListener("click", itemClicked)
-    parent.appendChild(newElement);
+  for (let task of currentTasks.getTaskList()) {
+    let newContainer = document.createElement("div");
+    let newText = document.createElement("p");
+    let newDelete = document.createElement("p");
+
+    newText.textContent = task;
+    newDelete.textContent = '🗑️';
+    newDelete.dataset.messageContent = task;
+
+    newContainer.classList.add("listing");
+    
+    newText.classList.add("btn");
+    newText.classList.add("btn-primary");
+    newText.classList.add("text");
+
+    newText.onclick = itemClicked;
+    
+    newDelete.classList.add("btn");
+    newDelete.classList.add("btn-danger");
+    newDelete.classList.add("waste");
+
+    newDelete.onclick = deleteElement;
+
+    newContainer.appendChild(newDelete);
+    newContainer.appendChild(newText);
+    parent.appendChild(newContainer);
   }
+
+  let newTask = document.createElement('button');
+  newTask.textContent = 'New Element ➕';
+  newTask.classList.add('btn', 'btn-info', 'fillx');
+  parent.appendChild(newTask);
+}
+
+function deleteElement (e) {
+  currentTasks.removeTask(e.target.dataset.messageContent);
+  regenerateTasks();
 }
 
 /**
@@ -87,12 +150,14 @@ function regenerateTasks () {
 function itemClicked (e) {
   if (oldSelected !== undefined) {
     oldSelected.target.classList = [];
+    oldSelected.target.classList.add('text');
     oldSelected.target.classList.add('btn');
     oldSelected.target.classList.add('btn-primary');
   }
   
   pushNewMarker(e.target.textContent);
   e.target.classList = [];
+  e.target.classList.add('text');
   e.target.classList.add('btn');
   e.target.classList.add('btn-success');
   oldSelected = e;
@@ -122,19 +187,4 @@ function clockOut() {
  */
 function writeLocalWorkToStorage () {
   localStorage.setItem('day', JSON.stringify(timeStats));
-}
-
-/**
- * Writes an array of tasks to Local Storage
- * @param {Array} tasks 
- */
-function writeTasksToLocalStorage (tasks) {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-/**
- * Loads all of the tasks stored in local storage
- */
-function loadTasksFromLocalStorage () {
-  return localStorage.getItem('tasks') === null ? undefined : JSON.parse(localStorage.getItem('tasks'));
 }

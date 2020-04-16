@@ -39,6 +39,23 @@ h1 {
   width:100%;
 }
 
+.listing {
+  display : flex;
+
+  .text {
+    flex : 98;
+  }
+
+  .waste {
+    flex : 2;
+  }
+}
+
+.fillx {
+  width : 100%;
+  margin-bottom : 1em;
+}
+
 @media (max-width:500) {
   h1 {
     font-size : 2.5em;
