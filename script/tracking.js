@@ -49,23 +49,26 @@ let currentTasks;
 // Handle for the page being loaded
 window.addEventListener('load', () => {
 
-  currentTasks = new Tasks([
-    "Accepting Notes",
-    "Chase Medical Records",
-    "Diabetic Eyes",
-    "Franking",
-    "GMS3's",
-    "GP-GP Transfers",
-    "Gynae Coding",
-    "Lunch",
-    "Materinity Referrals",
-    "Meeting",
-    "Milk",
-    "Military Spreadsheet",
-    "NASO Reports",
-    "Smears",
-    "Summarising"
-  ]);
+  currentTasks = new Tasks(Tasks.loadFromLocalStorage());
+  if (currentTasks.tasks === null) {
+    currentTasks = new Tasks([
+      "Accepting Notes",
+      "Chase Medical Records",
+      "Diabetic Eyes",
+      "Franking",
+      "GMS3's",
+      "GP-GP Transfers",
+      "Gynae Coding",
+      "Lunch",
+      "Materinity Referrals",
+      "Meeting",
+      "Milk",
+      "Military Spreadsheet",
+      "NASO Reports",
+      "Smears",
+      "Summarising"
+    ]);
+  }
 
   timeStats.startTime = DateTime.local();
 
@@ -152,6 +155,7 @@ function closeModal () {
 function deleteElement (e) {
   currentTasks.removeTask(e.target.dataset.messageContent);
   regenerateTasks();
+  Tasks.saveToLocalStorage(currentTasks);
 }
 
 function submitTaskModal (e) {
