@@ -14,4 +14,21 @@ ul li {
   font-size: 2em;
 }
 
+.table-container {
+  border: 1px solid black;
+  border-radius: 5px 5px 5px 5px;
+  padding: 0.2em;
+}
+.table-container table {
+  width: 100%;
+}
+.table-container table tbody:first-child td {
+  background-color: #d3f3ff;
+}
+.table-container table td {
+  text-align: center;
+  border: 1px solid #333;
+  padding: 1em;
+}
+
 /*# sourceMappingURL=overview.css.map */

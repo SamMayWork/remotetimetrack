@@ -8,6 +8,6 @@ function start () {
 }
 
 function updateClock () {
-  let timer = document.querySelector("#currentTimeString");
-  timer.textContent = `Current Time: ${DateTime.local().toFormat("HH:mm:ss")}`;   
+  let timer = document.querySelector('#currentTimeString');
+  timer.textContent = `Current Time: ${DateTime.local().toFormat('HH:mm:ss')}`;   
 }

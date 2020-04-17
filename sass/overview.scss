@@ -14,3 +14,28 @@ ul {
 #timeOverview {
   font-size : 2em;
 }
+
+
+.table-container {
+  border : 1px solid black;
+  border-radius : 5px 5px 5px 5px;
+  padding : 0.2em;
+
+  table {
+    width : 100%;
+
+    tbody {
+      &:first-child {
+        td {
+          background-color : #d3f3ff;
+        }
+      }
+    }
+
+    td {
+      text-align : center;
+      border: 1px solid #333;
+      padding : 1em;
+    }
+  }
+}
