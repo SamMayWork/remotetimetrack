@@ -9,6 +9,12 @@ window.addEventListener('load', () => {
   time.textContent = `Overall, today you worked for ${(subtractTimes(new DateTime.local(), new DateTime.fromISO(stats.startTime))).toFormat("HH 'hours and' mm 'minutes'")}`;
 });
 
+function calculateWorkingTime (timeStats) {
+  for (let makrer of timeStats.markers) {
+    
+  }
+}
+
 /**
  * Generates the table showing the overview of the day for the user
  */
@@ -19,9 +25,19 @@ function generateTableRows (timeStats) {
     let newRow = table.insertRow(0); 
     let message = newRow.insertCell(0);
     let timeStarted = newRow.insertCell(1);
+    let duration = newRow.insertCell(2);
     
+    let startedTime = new DateTime.fromISO(timeStats.markers[i].time);
+
     message.textContent = timeStats.markers[i].message;
-    timeStarted.textContent = new DateTime(timeStats.markers[i].time).toFormat("HH:mm");
+    timeStarted.textContent = startedTime.toFormat("HH:mm");
+
+    if (i > 0){
+      const timeDifference = subtractTimes(startedTime, new DateTime.fromISO(timeStats.markers[i].time));
+      duration.textContent = timeDifference.toFormat("HH 'hours and' MM 'minutes'");
+    } else {
+      duration.textContent = "";
+    }
   }
 } 
 
