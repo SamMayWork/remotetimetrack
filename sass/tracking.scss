@@ -69,8 +69,11 @@ h1 {
   height : 100%;
   display : none;
 
-
   padding : 5em;
+
+  @media (max-width:500px) {
+    padding : 2em;
+  }
 
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -80,6 +83,21 @@ h1 {
   padding : 5em;
   border : 1px solid black;
   border-radius : 5px solid black;
+
+  text-align : center;
+
+  * {
+    width : 100%;
+    margin-bottom : 0.5em;
+  }
+
+  input {
+    border : 1px solid black;
+  }
+
+  @media (max-width:500px) {
+    padding : 1em;
+  }
 }
 
 #pausebutton {

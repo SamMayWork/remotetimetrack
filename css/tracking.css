@@ -68,11 +68,29 @@ h1 {
   padding: 5em;
   background-color: rgba(0, 0, 0, 0.5);
 }
+@media (max-width: 500px) {
+  #pausemenu {
+    padding: 2em;
+  }
+}
 #pausemenu .modal-container {
   background-color: #ffffff;
   padding: 5em;
   border: 1px solid black;
   border-radius: 5px solid black;
+  text-align: center;
+}
+#pausemenu .modal-container * {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+#pausemenu .modal-container input {
+  border: 1px solid black;
+}
+@media (max-width: 500px) {
+  #pausemenu .modal-container {
+    padding: 1em;
+  }
 }
 
 #hiddenadd {
@@ -87,11 +105,29 @@ h1 {
   padding: 5em;
   background-color: rgba(0, 0, 0, 0.5);
 }
+@media (max-width: 500px) {
+  #hiddenadd {
+    padding: 2em;
+  }
+}
 #hiddenadd .modal-container {
   background-color: #ffffff;
   padding: 5em;
   border: 1px solid black;
   border-radius: 5px solid black;
+  text-align: center;
+}
+#hiddenadd .modal-container * {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+#hiddenadd .modal-container input {
+  border: 1px solid black;
+}
+@media (max-width: 500px) {
+  #hiddenadd .modal-container {
+    padding: 1em;
+  }
 }
 #hiddenadd * {
   text-align: center;
