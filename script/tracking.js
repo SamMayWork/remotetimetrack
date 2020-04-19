@@ -63,7 +63,7 @@ window.addEventListener('load', () => {
       "Materinity Referrals",
       "Meeting",
       "Milk",
-      "Military Spreadsheet",
+      "M. Spreadsheet",
       "NASO Reports",
       "Smears",
       "Summarising"
