@@ -76,12 +76,31 @@ window.addEventListener('load', () => {
   updateScreen();
   setInterval(updateScreen, 1000);
 
+  let pauseButton = document.querySelector("#pausebutton");
+  pauseButton.onclick = handlePause;
+
+  let unpauseButton = document.querySelector("#unpausebutton");
+  unpauseButton.onclick = handleUnpause;
+
   regenerateTasks();
 });
 
 // Stop the user accidentally navigating away from the site
 window.onbeforeunload = function () {
   return "";
+}
+
+
+function handlePause (e) {
+  pushNewMarker("Pause");
+  let modal = document.querySelector("#pausemenu");
+  modal.style.display = "block";
+}
+
+function handleUnpause (e) {
+  pushNewMarker("Unpause");
+  let modal = document.querySelector("#pausemenu");
+  modal.style.display = "none";
 }
 
 function updateScreen () {
