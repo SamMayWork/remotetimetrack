@@ -1,12 +1,111 @@
 let timeStats = {
   startTime : "",
   markers : [],
-  endTime : ""
+  endTime : "",
 }
 
 let oldSelected;
 
 let DateTime = luxon.DateTime;
+
+/**
+ * Binds an event handler with a callback to an element
+ * @param {string} event Event to listen for
+ * @param {*} callback Callback to be executed when the event fires
+ * @param {*} element Element to bind to 
+ */
+function generateEventListenerForBinding (event, callback, element) {
+  let binding = document.querySelector(element);
+  binding.addEventListener(event, callback);
+}
+
+class Modal {
+  modalidentifier = "";
+
+  /**
+   * Creates a Modal element and sets the trigger for opening the modal
+   * @param {string} rootModalIndentifier Root Element for the modal
+   * @param {string} showButtonIndentifier Element that should open modal when clicked
+   * @param {callback} openedCallback Called when the Modal has been opened
+   */
+  constructor (rootModalIndentifier, showButtonIndentifier, openedCallback=(() => {})) {
+    this.modalidentifier = rootModalIndentifier;
+    generateEventListenerForBinding ('click', e => { openedCallback() }, showButtonIndentifier);
+    this.generateModal ();
+  }
+
+  generateModal () {
+
+  }
+
+  showModal () {
+    let parent = document.querySelector(this.modalidentifier);
+    parent.style.display = "block";  
+  }
+
+  hideModal () {
+    let parent = document.querySelector(this.modalidentifier);
+    parent.style.display = "none";
+  }
+}
+
+class DurationModal extends Modal {
+  constructor (rootModalIndentifier, showButtonIndentifier) {
+    super(rootModalIndentifier, showButtonIndentifier);
+  }
+
+  generateModal () {
+    // Generate all of the options for the time selector
+    this.hoursSelector = `${this.modalidentifier} #hours`;
+    this.minutesSelector = `${this.modalidentifier} #minutes`;
+
+    let hoursSelector = document.querySelector(this.hoursSelector);
+    let minutesSelector = document.querySelector(this.minutesSelector);
+  
+    for (let hour = 0; hour < 24; hour++) {
+      const option = document.createElement("option");
+      option.textContent = `${hour} hours`;
+      option.value = hour;
+      hoursSelector.appendChild(option);
+    }
+  
+    for (let minute = 0; minute < 60; minute++) {
+      const option = document.createElement("option");
+      option.textContent = `${minute} minutes`;
+      option.value = minute;
+      minutesSelector.appendChild(option);
+    }
+
+    this.submitSelector = `${this.modalidentifier} .submit`;
+    this.cancelSelector = `${this.modalidentifier} .cancel`;
+
+    generateEventListenerForBinding('click', () => this.handleSubmit(), this.submitSelector)
+    generateEventListenerForBinding('click', () => this.handleCancel(), this.cancelSelector)
+  }
+
+  handleSubmit () {
+    super.hideModal();
+  }
+
+  handleCancel () {
+    super.hideModal();
+  }
+}
+
+class PauseModal extends Modal {
+  constructor (rootModalIndentifier, showButtonIndentifier) {
+    super(rootModalIndentifier, showButtonIndentifier, (() => {pushNewMarker("paused")}));
+  }
+
+  generateModal () {
+    generateEventListenerForBinding ('click', () => this.handleUnPause(), "#unpausebutton");
+  }
+
+  handleUnPause () {
+    pushNewMarker("unpause");
+    super.hideModal();
+  }
+}
 
 class Tasks {
   constructor(tasks) {
@@ -76,11 +175,8 @@ window.addEventListener('load', () => {
   updateScreen();
   setInterval(updateScreen, 1000);
 
-  let pauseButton = document.querySelector("#pausebutton");
-  pauseButton.onclick = handlePause;
-
-  let unpauseButton = document.querySelector("#unpausebutton");
-  unpauseButton.onclick = handleUnpause;
+  const pauseModal = new PauseModal ("#pausemenu", "#pausebutton");
+  const durationModal = new DurationModal("#goalmenu", '#goalmode');
 
   regenerateTasks();
 });
@@ -88,19 +184,6 @@ window.addEventListener('load', () => {
 // Stop the user accidentally navigating away from the site
 window.onbeforeunload = function () {
   return "";
-}
-
-
-function handlePause (e) {
-  pushNewMarker("Pause");
-  let modal = document.querySelector("#pausemenu");
-  modal.style.display = "block";
-}
-
-function handleUnpause (e) {
-  pushNewMarker("Unpause");
-  let modal = document.querySelector("#pausemenu");
-  modal.style.display = "none";
 }
 
 function updateScreen () {

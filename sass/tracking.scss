@@ -108,6 +108,19 @@ h1 {
   width : 100%;
 }
 
+#goalmode {
+  width : 100%;
+  margin-top : 1em;
+}
+
+#goalmenu {
+  @include hidden-modal;
+
+  .modal-container {
+    @include modal-dialog-page;
+  }
+}
+
 #pausemenu {
   @include hidden-modal;
 
